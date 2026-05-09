@@ -15,15 +15,22 @@ public class LoginForm extends JFrame implements ActionListener {
 		setTitle("Login");
 		setSize(300, 200);
         setResizable(false);
+        setLocationRelativeTo(null);
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(null);
 	    
 	    ImageIcon bg = new ImageIcon(
 	    		"C:\\Users\\atili\\OneDrive\\Desktop\\Java\\Workspace-GorselTabanliProgramlama\\"
-	    		+ "LibraryManagementSystem\\img\\login4.jpg");
+	    		+ "LibraryManagementSystem\\img\\img.jpg");
+	    Image img = bg.getImage();
+	    Image scaledImg = img.getScaledInstance(300, 200, Image.SCALE_SMOOTH);
 
-        JLabel background = new JLabel(bg);
-        background.setBounds(0,0,600,400);
+	    JLabel background = new JLabel(new ImageIcon(scaledImg));
+	    
+	    
+
+        
+        background.setBounds(0,0,300,200);
         
         background.setLayout(new GridBagLayout());
         
