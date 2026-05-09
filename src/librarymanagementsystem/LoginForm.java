@@ -18,7 +18,9 @@ public class LoginForm extends JFrame implements ActionListener {
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setLayout(null);
 	    
-	    ImageIcon bg = new ImageIcon("C:\\Users\\atili\\OneDrive\\Desktop\\Java\\Workspace-GorselTabanliProgramlama\\LibraryManagementSystem\\img\\login2.jpg");
+	    ImageIcon bg = new ImageIcon(
+	    		"C:\\Users\\atili\\OneDrive\\Desktop\\Java\\Workspace-GorselTabanliProgramlama\\"
+	    		+ "LibraryManagementSystem\\img\\login4.jpg");
 
         JLabel background = new JLabel(bg);
         background.setBounds(0,0,600,400);
@@ -121,7 +123,30 @@ public class LoginForm extends JFrame implements ActionListener {
 	                JOptionPane.showMessageDialog(this, "Please select a role");
 	                return;
 	            }
-	 }
+	            
+	            boolean result = DBHelper.checkLogin(email, password, role);
+
+	            if (result && role.equals("member")) {
+	                JOptionPane.showMessageDialog(this, "Login successful");
+
+	                MemberForm s = new MemberForm();
+	                dispose();
+
+	            } else if (result && role.equals("staff")) {
+	                JOptionPane.showMessageDialog(this, "Login successful");
+
+	                StaffForm t = new StaffForm();
+	                dispose();
+
+	            } 
+	            else {
+	                JOptionPane.showMessageDialog(this, "Login failed");
+	            }
+	        }
+	    }
+		 	
+		
 	 
-  }
+	 	
 }
+
