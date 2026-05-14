@@ -59,6 +59,7 @@ public class StaffForm extends JFrame implements ActionListener {
 		gbc.gridx=0;
 		gbc.gridy=2;
 		background.add(btnAddBook,gbc);
+		
         // Content pane olarak ayarla
         setContentPane(background);
 

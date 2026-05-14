@@ -6,6 +6,7 @@ public class Main {
 		new LoginForm();
 		//DBHelper.createTable();
 		//new StaffForm();
+		//new AddBookForm();
 
 	}
 

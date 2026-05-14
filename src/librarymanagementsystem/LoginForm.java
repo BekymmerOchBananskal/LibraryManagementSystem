@@ -131,15 +131,15 @@ public class LoginForm extends JFrame implements ActionListener {
 	                return;
 	            }
 	            
-	            boolean result = DBHelper.checkLogin(email, password, role);
+	            int result = DBHelper.checkLogin(email, password, role);
 
-	            if (result && role.equals("member")) {
+	            if (result !=-1 && role.equals("member")) {
 	                JOptionPane.showMessageDialog(this, "Login successful");
 
 	                MemberForm s = new MemberForm();
 	                dispose();
 
-	            } else if (result && role.equals("staff")) {
+	            } else if (result !=-1 && role.equals("staff")) {
 	                JOptionPane.showMessageDialog(this, "Login successful");
 
 	                StaffForm t = new StaffForm();
