@@ -1,4 +1,4 @@
-package librarymanagementsystem;
+package librarymanagementsystem.forms;
 import javax.swing.*;
 import java.awt.*;
 

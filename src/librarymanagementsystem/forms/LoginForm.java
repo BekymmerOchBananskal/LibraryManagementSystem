@@ -1,5 +1,8 @@
-package librarymanagementsystem;
+package librarymanagementsystem.forms;
 import javax.swing.*;
+
+import librarymanagementsystem.DBHelper;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

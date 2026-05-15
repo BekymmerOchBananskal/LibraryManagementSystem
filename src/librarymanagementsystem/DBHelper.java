@@ -2,6 +2,9 @@ package librarymanagementsystem;
 
 import java.sql.Connection;
 import java.sql.Statement;
+
+import javax.swing.table.DefaultTableModel;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -114,5 +117,32 @@ public class DBHelper {
         }
 
         return -1;
+    }
+    public static void getAllMembers(DefaultTableModel model) {
+
+        model.setRowCount(0);
+
+        String sql = "SELECT * FROM members";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("surname"),
+                        rs.getString("student_no"),
+                        rs.getString("email")
+                };
+
+                model.addRow(row);
+            }
+
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
     }
 }
