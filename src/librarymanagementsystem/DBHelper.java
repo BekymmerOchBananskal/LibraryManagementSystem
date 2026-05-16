@@ -330,5 +330,128 @@ public class DBHelper {
             err.printStackTrace();
         }
     }
+    public static void getAllBooks(DefaultTableModel model) {
+
+        model.setRowCount(0);
+
+        String sql = "SELECT * FROM books";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+
+                Object[] row = {
+                        rs.getInt("id"),
+                        rs.getString("title"),
+                        rs.getString("author"),
+                        rs.getString("category"),
+                        rs.getString("publisher"),
+                        rs.getInt("page_count"),
+                        rs.getString("status")
+                };
+
+                model.addRow(row);
+            }
+
+        } catch (Exception err) {
+            err.printStackTrace();
+        }
+    }
+    public static void insertBook(
+            String title,
+            String author,
+            String category,
+            String publisher,
+            int pageCount
+    ) {
+
+        String sql = "INSERT INTO books(title,author,category,publisher,page_count) "
+                + "VALUES(?,?,?,?,?)";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, title);
+            pstmt.setString(2, author);
+            pstmt.setString(3, category);
+            pstmt.setString(4, publisher);
+            pstmt.setInt(5, pageCount);
+
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book added successfully!");
+
+        } catch (Exception err) {
+            err.printStackTrace();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book could not be added!");
+        }
+    }
+    public static void updateBook(
+            int id,
+            String title,
+            String author,
+            String category,
+            String publisher,
+            int pageCount
+    ) {
+
+        String sql = "UPDATE books SET "
+                + "title=?, "
+                + "author=?, "
+                + "category=?, "
+                + "publisher=?, "
+                + "page_count=? "
+                + "WHERE id=?";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, title);
+            pstmt.setString(2, author);
+            pstmt.setString(3, category);
+            pstmt.setString(4, publisher);
+            pstmt.setInt(5, pageCount);
+            pstmt.setInt(6, id);
+
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book updated successfully!");
+
+        } catch (Exception err) {
+
+            err.printStackTrace();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book could not be updated!");
+        }
+    }
+    public static void deleteBook(int id) {
+
+        String sql = "DELETE FROM books WHERE id=?";
+
+        try (Connection conn = DBConnection.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, id);
+
+            pstmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book deleted successfully!");
+
+        } catch (Exception err) {
+
+            err.printStackTrace();
+
+            JOptionPane.showMessageDialog(null,
+                    "Book could not be deleted!");
+        }
+    }
             
 }

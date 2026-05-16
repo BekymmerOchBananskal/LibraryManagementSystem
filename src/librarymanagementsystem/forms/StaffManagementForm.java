@@ -23,7 +23,7 @@ public class StaffManagementForm extends JFrame implements ActionListener{
     int selectedMemberId;
 
     public StaffManagementForm() {
-        setTitle("Member Management Panel");
+        setTitle("Staff Management Panel");
         setSize(670, 500);
         setResizable(false);
         setLayout(new BorderLayout());
@@ -32,7 +32,7 @@ public class StaffManagementForm extends JFrame implements ActionListener{
 
         ImageIcon bg = new ImageIcon(
                 "C:\\Users\\atili\\OneDrive\\Desktop\\Java\\Workspace-GorselTabanliProgramlama\\"
-                        + "LibraryManagementSystem\\img\\login4.jpg"
+                        + "LibraryManagementSystem\\img\\staffform.jpg"
         );
 
         Image img = bg.getImage();
@@ -44,7 +44,7 @@ public class StaffManagementForm extends JFrame implements ActionListener{
 
         TitledBorder leftBorder = BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.BLACK, 3),
-                "Student Information"
+                "Staff Information"
         );
         leftBorder.setTitleColor(Color.WHITE);
         leftPanel.setBorder(leftBorder);
@@ -143,7 +143,7 @@ public class StaffManagementForm extends JFrame implements ActionListener{
         rightPanel.setBorder(
                 BorderFactory.createTitledBorder(
                         BorderFactory.createLineBorder(Color.BLACK, 3),
-                        "Member List"
+                        "Staff List"
                 )
         );
         String[] columns = {"ID", "Name", "Surname", "Email", "Password"};
