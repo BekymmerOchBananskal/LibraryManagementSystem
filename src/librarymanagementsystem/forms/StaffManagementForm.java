@@ -11,10 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MemberManagementForm extends JFrame implements ActionListener{
+public class StaffManagementForm extends JFrame implements ActionListener{
 
-    JLabel lblName, lblSurname, lblStudentno, lblEmail, lblPassword;
-    JTextField txtName, txtSurname, txtStudentno, txtEmail, txtPassword;
+    JLabel lblName, lblSurname, lblEmail, lblPassword;
+    JTextField txtName, txtSurname,  txtEmail, txtPassword;
     JButton btnAdd, btnUpdate, btnDelete, btnClear;
     JTable table;
     JPanel rightPanel, btnPanel;
@@ -22,9 +22,9 @@ public class MemberManagementForm extends JFrame implements ActionListener{
     JScrollPane scrollPane;
     int selectedMemberId;
 
-    public MemberManagementForm() {
+    public StaffManagementForm() {
         setTitle("Member Management Panel");
-        setSize(800, 500);
+        setSize(670, 500);
         setResizable(false);
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -82,18 +82,9 @@ public class MemberManagementForm extends JFrame implements ActionListener{
         gbc.gridy = 1;
         leftPanel.add(txtSurname, gbc);
 
-        lblStudentno = new JLabel("Student No: ");
-        lblStudentno.setForeground(Color.WHITE);
-        txtStudentno = new JTextField();
-        txtStudentno.setPreferredSize(fieldSize);
+        
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        leftPanel.add(lblStudentno, gbc);
-
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        leftPanel.add(txtStudentno, gbc);
+        
 
         lblEmail = new JLabel("Email: ");
         lblEmail.setForeground(Color.WHITE);
@@ -101,11 +92,11 @@ public class MemberManagementForm extends JFrame implements ActionListener{
         txtEmail.setPreferredSize(fieldSize);
 
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         leftPanel.add(lblEmail, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 2;
         leftPanel.add(txtEmail, gbc);
 
         lblPassword = new JLabel("Password: ");
@@ -114,11 +105,11 @@ public class MemberManagementForm extends JFrame implements ActionListener{
         txtPassword.setPreferredSize(fieldSize);
 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 3;
         leftPanel.add(lblPassword, gbc);
 
         gbc.gridx = 1;
-        gbc.gridy = 4;
+        gbc.gridy = 3;
         leftPanel.add(txtPassword, gbc);
 
         btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 15, 15));
@@ -155,18 +146,18 @@ public class MemberManagementForm extends JFrame implements ActionListener{
                         "Member List"
                 )
         );
-        String[] columns = {"ID", "Name", "Surname", "Student No", "Email"};
-
+        String[] columns = {"ID", "Name", "Surname", "Email", "Password"};
         model = new DefaultTableModel(columns, 0);
 
         table = new JTable(model);
+        table.removeColumn(table.getColumnModel().getColumn(4));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(25);
         table.getColumnModel().getColumn(0).setPreferredWidth(10);
         table.getColumnModel().getColumn(1).setPreferredWidth(70);
         table.getColumnModel().getColumn(2).setPreferredWidth(70);
-        table.getColumnModel().getColumn(3).setPreferredWidth(90);
-        table.getColumnModel().getColumn(4).setPreferredWidth(160);
+        table.getColumnModel().getColumn(3).setPreferredWidth(110);
+        
         JScrollPane scrollPane = new JScrollPane(table);
 
         rightPanel.add(scrollPane, BorderLayout.CENTER);
@@ -174,32 +165,23 @@ public class MemberManagementForm extends JFrame implements ActionListener{
         add(leftPanel, BorderLayout.WEST);
         add(rightPanel, BorderLayout.CENTER);
         
-        DBHelper.getAllMembers(model);
+        DBHelper.getAllStaff(model);
         
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
             	int selectedRow = table.getSelectedRow();
 
-                if (selectedRow != -1) {
+            	if (selectedRow != -1) {
 
                     selectedMemberId = Integer.parseInt(
                             model.getValueAt(selectedRow, 0).toString()
                     );
-
-                    txtName.setText(model.getValueAt(selectedRow, 1).toString());
-                    txtSurname.setText(model.getValueAt(selectedRow, 2).toString());
-
-                    String studentNo = model.getValueAt(selectedRow, 3).toString();
-
-                    txtStudentno.setText(studentNo);
-                    txtPassword.setText(studentNo);
-
-                    txtEmail.setText(model.getValueAt(selectedRow, 4).toString());
-                    
-
-
-                }
+            	    txtName.setText(model.getValueAt(selectedRow, 1).toString());
+            	    txtSurname.setText(model.getValueAt(selectedRow, 2).toString());
+            	    txtEmail.setText(model.getValueAt(selectedRow, 3).toString());
+            	    txtPassword.setText(model.getValueAt(selectedRow, 4).toString());
+            	}
             }
         });
 
@@ -210,32 +192,33 @@ public class MemberManagementForm extends JFrame implements ActionListener{
 	 if(e.getSource()==btnAdd) {
 		 String name=txtName.getText();
 		 String surname = txtSurname.getText();
-		 String studentno=txtStudentno.getText();
+		 
 		 String email=txtEmail.getText();
 		 String password=txtPassword.getText();
 		 
-		 DBHelper.insertStudent(name,surname,studentno,email,password);
-		 DBHelper.getAllMembers(model);
+		 DBHelper.insertStaff(name,surname,email,password);
+		 DBHelper.getAllStaff(model);
 		 clearFields();
 	 }
 	 if(e.getSource()==btnUpdate){
-
-		    DBHelper.updateMember(
+		 DBHelper.updateStaff(
 		            selectedMemberId,
 		            txtName.getText(),
 		            txtSurname.getText(),
-		            txtStudentno.getText(),
+		            
 		            txtEmail.getText(),
 		            txtPassword.getText()
 		    );
+		   
+		    
 
-		    DBHelper.getAllMembers(model);
+		    DBHelper.getAllStaff(model);
 		    clearFields();
 		}
 	 if (e.getSource() == btnDelete) {
 
 		    if (selectedMemberId == -1) {
-		        JOptionPane.showMessageDialog(this, "Please select a member first.");
+		        JOptionPane.showMessageDialog(this, "Please select a staff first.");
 		        return;
 		    }
 
@@ -247,11 +230,11 @@ public class MemberManagementForm extends JFrame implements ActionListener{
 		    );
 
 		    if (confirm == JOptionPane.YES_OPTION) {
-		        DBHelper.deleteMember(selectedMemberId);
-		        DBHelper.getAllMembers(model);
+		        DBHelper.deleteStaff(selectedMemberId);
+		        DBHelper.getAllStaff(model);
 		        clearFields();
 
-		        JOptionPane.showMessageDialog(this, "Member deleted successfully.");
+		        JOptionPane.showMessageDialog(this, "Staff deleted successfully.");
 		    }
 		}
 	 if (e.getSource() == btnClear) {
@@ -263,7 +246,7 @@ public class MemberManagementForm extends JFrame implements ActionListener{
 
         txtName.setText("");
         txtSurname.setText("");
-        txtStudentno.setText("");
+        
         txtEmail.setText("");
         txtPassword.setText("");
 

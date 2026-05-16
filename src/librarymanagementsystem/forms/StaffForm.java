@@ -93,5 +93,8 @@ public class StaffForm extends JFrame implements ActionListener {
     	if(e.getSource()==btnAddMember) {
     		new MemberManagementForm();
     	}
+    	if(e.getSource()==btnAddStaff) {
+    		new StaffManagementForm();
+    	}
     }
 }
